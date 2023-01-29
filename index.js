@@ -1,6 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const url = require("url");
+const replaceTemplate = require("./modules/replaceTemplate");
 
 // Reading data from json file
 
@@ -16,24 +17,6 @@ const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`);
 const tempProduct = fs.readFileSync(
   `${__dirname}/templates/template-product.html`
 );
-
-// Function that replace the placeholders in the card template with the real data from the data json file
-const replaceTemplate = (template, product) => {
-  let output = template
-    .toString()
-    .replace(/{%PRODUCTNAME%}/g, product.productName);
-  output = output.toString().replace(/{%IMAGE%}/g, product.image);
-  output = output.toString().replace(/{%PRICE%}/g, product.price);
-  output = output.toString().replace(/{%FROM%}/g, product.from);
-  output = output.toString().replace(/{%NUTRIENTS%}/g, product.nutrients);
-  output = output.toString().replace(/{%QUANTITY%}/g, product.quantity);
-  output = output.toString().replace(/{%DESCRIPTION%}/g, product.description);
-  output = output.toString().replace(/{%ID%}/g, product.id);
-
-  if (!product.organic)
-    output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic");
-  return output;
-};
 
 // Creating the server
 
